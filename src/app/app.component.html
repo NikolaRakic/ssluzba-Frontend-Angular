@@ -1,0 +1,68 @@
+<div id="app">
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <ul class="navbar-nav mr-auto" routerLinkActive="active">
+      <li class="nav-item">
+        <a href="/home" class="nav-link" routerLink="home">Home </a>
+      </li>
+      <li class="nav-item" *ngIf="showAdmin">
+        <a href="/admin" class="nav-link" routerLink="admin">Kursevi</a>
+      </li>
+      <li class="nav-item" *ngIf="showAdmin">
+        <a href="/studenti" class="nav-link" routerLink="studenti">Studenti</a>
+      </li>
+      <li class="nav-item" *ngIf="showAdmin">
+        <a href="/nastavnici" class="nav-link" routerLink="nastavnici">Nastavnici</a>
+      </li>
+      <li class="nav-item" *ngIf="showAdmin">
+        <a href="/predmeti" class="nav-link" routerLink="predmeti">Predmeti</a>
+      </li>
+      <li class="nav-item" *ngIf="showAdmin">
+        <a href class="nav-link" routerLink="rokovi">Rokovi</a>
+      </li>
+      <li class="nav-item">
+        <a *ngIf="showProfesor" class="nav-link" routerLink="predmetiNastavnik">Predmeti za nastavnika</a>
+      </li>
+      <li class="nav-item">
+        <a *ngIf="showProfesor" class="nav-link" routerLink="ocenjivanje">Ocenjivanje</a>
+      </li>
+      <li class="nav-item" *ngIf="showStudent">
+        <a class="nav-link" routerLink="smer/{{smerId}}">Moj smer</a>
+      </li>
+      <li class="nav-item" *ngIf="showStudent">
+        <a href="predmeti/{{id}}" *ngIf="showStudent" class="nav-link" routerLink="predmeti/{{id}}">Predmeti</a>
+      </li>
+      <li class="nav-item">
+        <a href="ispiti" *ngIf="isLoggedIn" class="nav-link" routerLink="ispiti">Ispiti</a>
+      </li>
+      <li class="nav-item" *ngIf="showStudent">
+        <a class="nav-link" routerLink="polozeniIspiti">Polozeni ispiti</a>
+      </li>
+      
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+      <li class="nav-item">
+        <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
+      </li>
+      <li class="nav-item">
+        <a href="/login" class="nav-link" routerLink="login">Login</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+
+      <li class="nav-item">
+        <a href="/profil/{{id}}" *ngIf="showStudent" class="nav-link" routerLink="profil/{{id}}">{{ username }}</a>
+        <a *ngIf="!showStudent" class="nav-link" >{{ username }}</a>
+      </li>
+      
+      <li class="nav-item">
+        <a href class="nav-link" (click)="logout()">LogOut</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

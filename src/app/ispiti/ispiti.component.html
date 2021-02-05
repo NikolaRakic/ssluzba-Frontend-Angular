@@ -1,0 +1,24 @@
+<div>
+    <input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="input" (input)="search()"/>
+    <table class="table table-bordered">
+        <tr>
+            <th>Student</th>
+            <th>Predmet</th>
+            <th>Rok</th>
+            <th>Tip ispita</th>
+            <th>Datum</th>
+            <th>Ocena</th>
+            <th>Bodovi</th>
+        </tr>
+        <tr *ngFor="let ispit of sviIspiti">
+            <td>{{ispit.brojIndeksa}}</td>
+            <td>{{ispit.nazivPredmeta}}</td>
+            <td>{{ispit.nazivRoka}}</td>
+            <td>{{ispit.tipIspita}}</td>
+            <td>{{ispit.datum}}</td>
+            <td>{{ispit.ocena}}</td>
+            <td>{{ispit.bodovi}}</td>
+        </tr>
+
+    </table>
+</div>

@@ -1,0 +1,67 @@
+<div>
+    <table class="table table-border">
+        <tr>
+            <th>Izaberite predmet:</th>
+            <td>
+                <select class="form-control" (change)="onChange($event.target.value)">
+                    <option value="">--Izaberite predmet--</option>
+                    <option *ngFor="let predmet of predmeti" value="{{predmet.idPredmet}}">{{predmet.naziv}}</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Izaberite smer:</th>
+            <td>
+                <select class="form-control" (change)="onChange2($event.target.value)">
+                    <option value="">--Izaberite smer--</option>
+                    <option *ngFor="let smer of smerovi" value="{{smer.id}}">{{smer.naziv}}</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Izaberite studenta:</th>
+            <td>
+                <select class="form-control" (change)="onChange3($event.target.value)" [(ngModel)] = "ispitIliKolokvijumDTO.idStudent">
+                    <option value="">--Izaberite studenta--</option>
+                    <option *ngFor="let student of studenti" value="{{student.idStudenta}}">{{student.brojIndeksa}} {{student.ime}} {{student.prezime}}</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Izaberite aktivan rok</th>
+            <td>
+            <select class="form-control" (change)="onChange3($event.target.value)" [(ngModel)] = "ispitIliKolokvijumDTO.idRok">
+                <option value="">--Izaberite rok--</option>
+                <option *ngFor="let rok of aktivniRokovi" value="{{rok.idRok}}">{{rok.nazivRoka}}</option>
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Izaberite tip ispita</th>
+            <td>
+            <select class="form-control" (change)="onChange3($event.target.value)" [(ngModel)] = "ispitIliKolokvijumDTO.idTipIspita">
+                <option value="">--Izaberite tip ispita--</option>
+                <option *ngFor="let tipIspita of tipoviIspita" value="{{tipIspita.idTipIspita}}">{{tipIspita.nazivTipa}}</option>
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Datum ispita</th>
+            <td><input type="date" class="form-control" [(ngModel)] = "ispitIliKolokvijumDTO.datumIspita"></td>
+        </tr>
+        <tr>
+            <th>Osvojeni bodovi</th>
+            <td><input type="number" class="form-control" min="0" max="100" [(ngModel)] = "ispitIliKolokvijumDTO.bodovi"></td>
+        </tr>
+        <tr>
+            <th>Ocena</th>
+            <td><input type="number" class="form-control" min="5" max="10" [(ngModel)] = "ispitIliKolokvijumDTO.ocena"></td>
+        </tr>
+    </table>
+    <button class="btn btn-primary" (click)="unesiIspit()">Unesi ispit</button>
+</div>
+
+
+
+
+

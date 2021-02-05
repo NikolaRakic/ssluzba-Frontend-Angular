@@ -1,0 +1,50 @@
+<div>
+    
+    <hr>
+    <table class="table" *ngIf="loaded">
+        <tr>
+            <th>Ime</th>
+            <input class="form-control" type="text" [(ngModel)] = "nastavnik.ime">
+        </tr>
+        <tr>
+            <th>Prezime</th>
+            <input type="text" class="form-control" [(ngModel)]="nastavnik.prezime">
+        </tr>
+        <tr>
+            <th>Adresa</th>
+            <input type="text" class="form-control" [(ngModel)]="nastavnik.adresa">
+        </tr>
+        <tr>
+            <th>Rodjendan</th>
+            <input type="date" class="form-control" [(ngModel)]="nastavnik.rodjendan">
+        </tr>
+        <tr>
+            <th>Email</th>
+            <input type="text" class="form-control" [(ngModel)]="nastavnik.email">
+        </tr>
+        <tr>
+            <th>Korisnicko ime</th>
+            <input type="text" class="form-control" [(ngModel)]="nastavnik.username">
+        </tr>
+        <tr *ngIf="dodavanje">
+            <th>Lozinka</th>
+            <input type="text" class="form-control" [(ngModel)]="nastavnik.pass">
+        </tr>
+        <tr>
+            <th>Uloga</th>
+            <td>
+            <select class="form-control" name="uloge" [(ngModel)] = "nastavnik.ulogaNastavnik">
+                <option *ngFor="let uloga of uloge" value={{uloga.naziv}} [selected] = "uloga.naziv == nastavnik.ulogaNastavnik">{{uloga.naziv}}</option>
+            </select>
+             </td>
+        </tr>
+        <tr>
+            <td>
+                <br>
+                <button *ngIf="dodavanje" class="btn btn-info" (click)="add()">Add</button>
+                <button *ngIf="izmena" class="btn btn-info" (click)="edit()">Edit</button>
+            </td>
+        </tr>
+    </table>
+
+</div>

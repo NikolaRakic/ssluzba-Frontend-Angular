@@ -1,0 +1,26 @@
+
+<div>
+    <p>Smerovi:</p>
+    <table class="table table-bordered">
+        <tr>
+            <th>Naziv smera</th>
+            <th>Broj semestra</th>
+            <th></th>
+        </tr>
+        <tr *ngFor="let smer of smerovi">
+            <td>
+                <a href="/smer/{{smer.id}}" type="text" >{{smer.naziv}}</a>
+            </td>
+            <td>
+                {{smer.trajanje}}
+            </td>
+            <td>
+                <a href="/smer/{{smer.id}}" type="button" class="btn btn-info">Edit</a>
+                &nbsp;
+                <button type="button" class="btn btn-danger" (click)="obrisiSmer(smer)">Delete</button>
+            </td>
+        </tr>
+    </table>
+    &nbsp;
+    <button type="button" class="btn btn-primary" (click)="dodajSmer()">Dodaj smer</button>
+</div>

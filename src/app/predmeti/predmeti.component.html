@@ -1,0 +1,40 @@
+<div *ngIf="prikazZaStudenta && loaded">
+    <h3>Predmeti za smer <b>{{smer.naziv}}</b></h3>
+    <table class="table table-bordered">
+        <th>Naziv predmeta</th>
+        <tr *ngFor="let predmet of predmeti">
+            <td><a href="/predmet/{{predmet.idPredmet}}">{{predmet.nazivPredmeta}}</a></td>
+        </tr>
+    </table>
+    
+</div>
+
+<div *ngIf="ulogovaniKorisnik.uloga == 'admin'">
+    <table class="table table-bordered">
+        <th>Naziv predmeta</th>
+        <tr *ngFor="let predmet of predmeti">
+            <td><label class="form-control" type="text" name="naziv" >{{predmet.naziv}}</label></td>
+            <td>
+                <a href="/predmet/{{predmet.idPredmet}}" type="button" class="btn btn-info">Nastavnici</a>
+               
+                &nbsp;
+                <button class="btn btn-danger" (click)="obrisiPredmet(predmet.idPredmet)">Obrisi</button>
+             </td>
+        </tr>
+    </table>
+    <button type="button" class="btn btn-primary" (click)="showAddFormF()">Dodaj predmet</button>
+</div>
+
+<div *ngIf="showAddForm">
+    <table class="table">
+        <tr>
+            <th>Naziv predmeta</th>
+            <td>
+                <input type="text" class="form-control" value="" [(ngModel)]="noviPredmet.naziv">
+            </td>
+        </tr>
+    </table>
+    <button type="button" class="btn btn-primary" (click)="dodajPredmet()">Dodaj predmet</button>
+</div>
+
+

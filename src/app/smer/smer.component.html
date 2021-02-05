@@ -1,0 +1,97 @@
+<div *ngIf="loaded">
+    
+    <hr>
+    <h3>Informacije o smeru</h3>
+    <table class="table" >
+        
+        <tr>
+            <th>Naziv</th>
+            <td *ngIf="uloga =='admin'"><input class="form-control" type="text" [(ngModel)] = "smer.naziv"></td>
+            <td *ngIf="uloga !=='admin'"><input type="text" class="form-control"  value="{{smer.naziv}}" readonly></td>
+        </tr>
+        <tr>
+            <th>Trajanje smera</th>
+            <td *ngIf="uloga =='admin'"><input class="form-control" type="text" [(ngModel)] = "smer.trajanje"></td>
+            <td *ngIf="uloga !=='admin'"><input type="text" class="form-control"  value="{{smer.trajanje}}" readonly></td>
+        </tr>
+        <tr>
+            <td>
+                <br>
+                <button *ngIf="dodavanje" class="btn btn-info" (click)="add()">Add</button>
+                <button *ngIf="izmena && uloga == 'admin'" class="btn btn-info" (click)="edit()">Edit</button>
+            </td>
+        </tr>
+    </table>
+</div>
+<br>
+<div *ngIf="loaded2 && uloga =='admin'">
+    <h3>Predmeti na smeru</h3>
+    <table class="table" >
+        <tr>
+            <th>Naziv</th>
+            <th>Godina pojavljivanja</th>
+        </tr>
+        <tr *ngFor="let predmet of predmeti">
+            <td>
+                <a href="/predmet/{{predmet.idPredmet}}">{{predmet.nazivPredmeta}}</a>
+            </td>
+            <td>
+                <select class="form-control"  id="predmet" [(ngModel)] = "predmet.godinaPojavljivanjaPredmetaNaSmeru">
+                    <option *ngFor="let broj of numbers" value={{broj+1}} [selected] = "broj+1 == predmet.godinaPojavljivanjaPredmetaNaSmeru">{{broj+1}}</option>
+                </select>
+            </td>
+            <td>
+                
+                <button type="button" class="btn btn-danger" (click)="obrisiPredmet(predmet.idPredmet)">Delete</button>
+            </td>
+        </tr>
+
+    </table>
+
+    <button class="btn btn-info" (click)="izmeniPredmet()">Edit</button>
+    &nbsp;
+    <button class="btn btn-primary" (click)="dodeliPredmetSmeru()">Dodaj predmet</button>
+    <br><br>
+    <div *ngIf="prikaziDodaluPredmeta">
+        <table class="table">
+            <tr>
+                <th>Predmet</th>
+                <td>
+                    <select  class="form-control"  id="predmet" [(ngModel)] = "noviPredmet.idPredmet">
+                        <option *ngFor="let pred of sviPredmeti" value={{pred.idPredmet}} >{{pred.naziv}}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Godina pojavljivanja</th>
+                <td>
+                    <select class="form-control"  id="predmet" [(ngModel)] = "noviPredmet.godinaPojavljivanja">
+                        <option *ngFor="let broj of numbers" value={{broj+1}} >{{broj+1}}</option>
+                    </select>
+                </td>
+            </tr>
+            <button class="btn btn-primary" (click)="dodajPredmet()">Dodaj</button>
+        </table>
+        
+        
+    </div>
+</div>
+
+<div *ngIf="uloga =='admin' || uloga == 'nastavnik'">
+    <h3>Studenti na smeru</h3>
+    <table class="table table-bordered">
+        <tr>
+            <th>Broj indeksa</th>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+        <tr *ngFor="let student of studenti">
+            <td><a href="profil/{{student.id}}"> {{student.brojIndeksa}}</a></td>
+            <td>{{student.ime}}</td>
+            <td>{{student.prezime}}</td>
+            <td>{{student.email}}</td>
+        </tr>
+    </table>
+</div>

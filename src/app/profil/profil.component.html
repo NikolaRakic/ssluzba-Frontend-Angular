@@ -1,0 +1,117 @@
+<div>
+    
+
+    <table class="table" #tabela *ngIf="loaded">
+        <tr>
+            <th>Ime</th>
+            <td>{{korisnik.ime}}</td>
+        </tr>
+        <tr>
+            <th>Prezime</th>
+            <td>{{korisnik.prezime}}</td>
+        </tr>
+        <tr>
+            <th>Korisnicko ime</th>
+            <td>{{korisnik.username}}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{korisnik.email}}<td>
+        </tr>
+        <tr>
+            <th>Adresa</th>
+            <td>{{korisnik.adresa}}</td>
+        </tr>
+        <tr>
+            <th>Datum rodjenja</th>
+            <td>{{korisnik.rodjendan}}</td>
+        </tr>
+        <tr>   
+            <th>Uloga</th>
+            <td>{{korisnik.uloga}}</td>
+        </tr>
+        <tr>   
+            <th>Broj indeksa</th>
+            <td>{{korisnik.brojIndeksa}}</td>
+        </tr>
+        <tr>   
+            <th>Godina studija</th>
+            <td>{{korisnik.godinaStudija}}</td>
+        </tr>
+        <tr>   
+            <th>Naziv smera</th>
+            <td>{{korisnik.smerStudenta}}</td>
+        </tr>
+   </table>
+   <button #showEditBtn class="btn btn-info" (click)="showEdit()">Show edit form</button>
+   &nbsp;
+   <button *ngIf="uloga == 'admin'" type="button" class="btn btn-danger" (click)="obrisiStudenta()">Delete</button>
+</div>
+<br>
+<div id="izmenaAdmin" #izmenaAdmin>
+    <table class="table" *ngIf="loaded">
+        <tr>
+            <th>Ime</th>
+            <td><input class="form-control" type="text" [(ngModel)]="korisnik.ime"></td>
+        </tr>
+        <tr>
+            <th>Prezime</th>
+            <td><input class="form-control" type="text"  [(ngModel)] = "korisnik.prezime"></td>
+        </tr>
+        <tr>
+            <th>Korisnicko ime</th>
+            <td><input class="form-control" type="text"  [(ngModel)] = "korisnik.username"></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td><input class="form-control" type="text" value = {{korisnik.email}} readonly><td>
+        </tr>
+        <tr>
+            <th>Adresa</th>
+            <td><input class="form-control" type="text"  [(ngModel)] = "korisnik.adresa"></td>
+        </tr>
+        <tr>
+            <th>Datum rodjenja</th>
+            <td><input class="form-control" type="date"  [(ngModel)] = "korisnik.rodjendan"></td>
+        </tr>
+        <tr>   
+            <th>Uloga</th>
+            <td><input class="form-control" type="text"  value = {{korisnik.uloga}} readonly></td>
+        </tr>
+        <!-- 
+        <tr *ngIf="uloga=='admin'">   
+            <th>Uloga</th>
+            <td>
+                <input type="radio" #admin id="admin" name="uloga" value="admin" [checked]="korisnik.uloga=='admin'">
+                <label for="admin">Admin</label><br> 
+                <input type="radio" #student id="student" name="uloga" value="student" [checked]="korisnik.uloga=='student'" >
+                <label for="admin">Student</label><br>
+            </td>
+
+        </tr>-->
+        <tr>   
+            <th>Broj indeksa</th>
+            <td *ngIf="uloga !='admin'"><input class="form-control" type="text"  [(ngModel)] = "korisnik.brojIndeksa" readonly></td>
+            <td *ngIf="uloga =='admin'"><input class="form-control" type="text"  [(ngModel)] = "korisnik.brojIndeksa"></td>
+        </tr>
+        <tr>   
+            <th>Godina studija</th>
+            <td *ngIf="uloga !='admin'"><input class="form-control" type="text"  [(ngModel)] = "korisnik.godinaStudija" readonly></td>
+            <td *ngIf="uloga =='admin'"><input class="form-control" type="text"  [(ngModel)] = "korisnik.godinaStudija"></td>
+        </tr>
+        <tr>   
+            <th>Naziv smera</th>
+            <td *ngIf="uloga =='admin'">
+                <select class="form-control" name="smerovi" id="smer" [(ngModel)] = "korisnik.smerStudenta">
+                    <option *ngFor="let smer of smerovi" value={{smer.naziv}} [selected] = "smer.naziv == korisnik.smerStudenta">{{smer.naziv}}</option>
+                </select>
+            </td>
+            <td *ngIf="uloga !='admin'"><input class="form-control" type="text"  [(ngModel)] = "korisnik.smerStudenta" readonly></td>
+        </tr>
+        <br>
+        <button class="btn btn-info" (click)="edit()">Edit</button>
+        &nbsp;
+        <button *ngIf="uloga == 'admin'" type="button" class="btn btn-danger" (click)="obrisiStudenta()">Delete</button>
+   </table>
+   
+</div>
