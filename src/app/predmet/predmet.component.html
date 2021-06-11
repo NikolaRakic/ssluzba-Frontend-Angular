@@ -1,53 +1,69 @@
 <div *ngIf="loaded">
-
-
-    <h3>Nastavnici za predmet {{predmet.naziv}}</h3>
-    <table class="table">
-        <tr>
-            <th>Ime</th>
-            <th>Prezime</th>
-            <th>Email</th>
-            <th>Uloga</th>
-        </tr>
-        <tr *ngFor="let nastavnik of nastavniciZaPredmet">
-            <td *ngIf="uloga == 'admin'"><a href="/nastavnik/{{nastavnik.idKorisnik}}">{{nastavnik.ime}}</a></td>
-            <td *ngIf="uloga != 'admin'">{{nastavnik.ime}}</td>
-            <td>{{nastavnik.prezime}}</td>
-            <td>{{nastavnik.email}}</td>
-            <td>{{nastavnik.uloga}}</td>
-            <td *ngIf="uloga == 'admin'"><button class="btn btn-danger" (click)="obrisiNastavnikaNaPredmetu(nastavnik.idNastavnik, predmet.idPredmet)">Obrisi</button></td>
-        </tr>
-       
-    </table>
-    <br>
+  <h3>Nastavnici za predmet {{ predmet.naziv }}</h3>
+  <table class="table">
+    <tr>
+      <th>Ime</th>
+      <th>Prezime</th>
+      <th>Email</th>
+      <th>Uloga</th>
+    </tr>
+    <tr *ngFor="let nastavnik of nastavniciZaPredmet">
+      <td *ngIf="uloga == 'admin'">
+        <a href="/nastavnik/{{ nastavnik.idKorisnik }}">{{ nastavnik.ime }}</a>
+      </td>
+      <td *ngIf="uloga != 'admin'">{{ nastavnik.ime }}</td>
+      <td>{{ nastavnik.prezime }}</td>
+      <td>{{ nastavnik.email }}</td>
+      <td>{{ nastavnik.uloga }}</td>
+      <td *ngIf="uloga == 'admin'">
+        <button
+          class="btn btn-danger"
+          (click)="obrisiNastavnikaNaPredmetu(nastavnik.idNastavnik, predmet.idPredmet)"
+        >
+          Obrisi
+        </button>
+      </td>
+    </tr>
+  </table>
+  <br />
 </div>
 <div *ngIf="uloga == 'admin'">
-    <h3>Dodaj Nastavnika</h3>
+  <h3>Dodaj Nastavnika</h3>
 
-    <table class="table table-bordered">
-        <tr>
-            <th>Nastavnik</th>
-            <td>
-                <select class="form-control"  [(ngModel)] = "noviNastavnikNaPredmetu.idNastavnik">
-                    <option *ngFor="let nast of sviNastavnici" value={{nast.idNastavnik}} >{{nast.ime}} {{nast.prezime}}</option>
-                </select>
-            </td>
-        </tr>
-        <br>
-        <button class="btn btn-primary" (click)="dodajNastavnika()">Dodaj nastavnika</button>
-    </table>
+  <table class="table table-bordered">
+    <tr>
+      <th>Nastavnik</th>
+      <td>
+        <select
+          class="form-control"
+          [(ngModel)]="noviNastavnikNaPredmetu.idNastavnik"
+        >
+          <option
+            *ngFor="let nast of sviNastavnici"
+            value="{{ nast.idNastavnik }}"
+          >
+            {{ nast.ime }} {{ nast.prezime }}
+          </option>
+        </select>
+      </td>
+    </tr>
+    <br />
+    <button class="btn btn-primary" (click)="dodajNastavnika()">
+      Dodaj nastavnika
+    </button>
+  </table>
 </div>
 
 <div *ngIf="loaded2 && uloga == 'admin'">
-    <h3>Smerovi za predmet {{predmet.naziv}}</h3>
-    <table class="table">
-        <tr>
-            <th>Ime smera</th>
-        </tr>
-        <tr *ngFor="let smer of smerovi">
-            <td>
-                <a href="/smer/{{smer.id}}">{{smer.naziv}}</a>
-            </td>
-        </tr>
-    </table>
+  <h3>Smerovi za predmet {{ predmet.naziv }}</h3>
+  <table class="table">
+    <tr>
+      <th>Ime smera</th>
+    </tr>
+    <tr *ngFor="let smer of smerovi">
+      <td>
+        <a href="/smer/{{ smer.id }}">{{ smer.naziv }}</a>
+      </td>
+    </tr>
+  </table>
 </div>

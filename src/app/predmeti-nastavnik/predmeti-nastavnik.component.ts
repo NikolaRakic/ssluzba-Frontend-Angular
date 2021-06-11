@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Predmet } from '../model/predmet.model';
 import { NastavnikService } from '../_services/nastavnik.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 
@@ -19,22 +20,25 @@ export class PredmetiNastavnikComponent implements OnInit {
 
   ngOnInit(): void {
     this.ulogovaniKorisnik = this.tokenStorage.getUser();
-    this.uloga = this.ulogovaniKorisnik.authorities[0].authority;
+    try {
+      this.uloga = this.ulogovaniKorisnik.authorities[0].authority;
+    } catch {
+      alert("Niste prijavljeni!")
+      window.location.replace("login");
+      return;
+    }
     console.log(this.ulogovaniKorisnik)
     this.getPredmeti(this.ulogovaniKorisnik.id);
   }
 
-  getPredmeti(id: Number){
+  getPredmeti(id: Number) {
     this.nastavnikService.getPredmetiZaNastavnika(id).subscribe(
-      (res: any) => {
+      (res: Predmet[]) => {
         console.log(res)
         this.predmeti = res;
-        
         this.loaded = true;
       }
     )
   }
-
-
 
 }

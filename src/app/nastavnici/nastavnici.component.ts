@@ -20,51 +20,52 @@ export class NastavniciComponent implements OnInit {
 
   ngOnInit(): void {
     this.ulogovaniKorisnik = this.tokenStorage.getUser();
-    this.uloga = this.ulogovaniKorisnik.authorities[0].authority;
-    if(this.uloga != "admin"){
+    try{
+      this.uloga = this.ulogovaniKorisnik.authorities[0].authority;
+    }catch{
+      alert("Niste prijavljeni!")
+      this.router.navigate(['/login']);
+      return;
+    }
+   
+    if (this.uloga != "admin" ) {
       alert("Nemate pristup ovoj stranici!");
       this.router.navigate(['/login']);
-     
-    }else{
+    } 
     this.getNastavnici();
-    }
-
   }
 
-
-  getNastavnici(){
+  getNastavnici() {
     this.adminService.getNastavnici().subscribe(
-      (res: any) =>{
-      this.nastavnici = res;
-    },
-    err =>{
-      console.log(err);
-    })
+      (res: Nastavnik[]) => {
+        this.nastavnici = res;
+      },
+      err => {
+        console.log(err);
+      })
   }
 
-  dodajNastavnika(){
+  dodajNastavnika() {
     this.router.navigate(['/nastavnik']);
   }
 
-  obrisi(id){
+  obrisi(id: number) {
     this.adminService.obrisiKorisnika(id).subscribe(
       (res) => {
         this.getNastavnici()
         console.log(res);
-
       }
     );
   }
 
-  search(){
-    if(this.input != ""){
-      this.nastavnici = this.nastavnici.filter(res=>{
+  search() {
+    if (this.input != "") {
+      this.nastavnici = this.nastavnici.filter(res => {
         return res.ime.toLocaleLowerCase().match(this.input.toLocaleLowerCase()) || res.prezime.toLocaleLowerCase().match(this.input.toLocaleLowerCase());
       })
-    }else if(this.input == ""){
+    } else if (this.input == "") {
       this.ngOnInit();
     }
-    
   }
 
 }

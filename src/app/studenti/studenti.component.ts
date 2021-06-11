@@ -20,11 +20,16 @@ export class StudentiComponent implements OnInit {
 
   ngOnInit(): void {
     this.ulogovaniKorisnik = this.tokenStorage.getUser();
-    this.uloga = this.ulogovaniKorisnik.authorities[0].authority;
+    try {
+      this.uloga = this.ulogovaniKorisnik.authorities[0].authority;
+    } catch {
+      alert("Niste prijavljeni!")
+      window.location.replace("login");
+      return;
+    }
     if(this.uloga != "admin"){
       alert("Nemate pristup ovoj stranici!");
-      this.router.navigate(['/login']);
-     
+      this.router.navigate(['/login']);   
     }else{
     this.getStudents();
     }
@@ -40,15 +45,10 @@ export class StudentiComponent implements OnInit {
     })
   }
 
-
-  obrisiStudenta(korisnikId: Number): void{
+  obrisiStudenta(korisnikId: number): void{
     this.adminService.obrisiKorisnika(korisnikId).subscribe(
       () => this.getStudents()
     );
-  }
-
-  reloadPage(): void {
-    window.location.reload();
   }
 
   search(){
@@ -58,8 +58,7 @@ export class StudentiComponent implements OnInit {
       })
     }else if(this.input == ""){
       this.ngOnInit();
-    }
-    
+    }   
   }
 
 };

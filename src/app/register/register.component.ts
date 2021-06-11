@@ -20,13 +20,12 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSmerovi();
-   
   }
 
   onSubmit(): void {
     this.form.uloga = "student"
     this.form.godinaStudija = 1;  
-    
+
     console.log("forma je  " + this.form);
     
     this.authService.register(this.form).subscribe(

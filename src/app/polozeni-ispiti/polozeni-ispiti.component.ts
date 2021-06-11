@@ -18,17 +18,23 @@ export class PolozeniIspitiComponent implements OnInit {
 
   ngOnInit(): void {
     this.ulogovaniKorisnik = this.tokenStorage.getUser();
-    this.uloga = this.ulogovaniKorisnik.authorities[0].authority;
-    if(this.uloga != "student"){
+    try {
+      this.uloga = this.ulogovaniKorisnik.authorities[0].authority;
+    }
+    catch {
+      alert("Niste prijavljeni!")
+      this.router.navigate(['/login']);
+      return;
+    }
+    if (this.uloga != "student") {
       alert("Nemate pristup ovoj stranici!");
       this.router.navigate(['/login']);
-     
-    }else{
+    } else {
       this.getPolozeniIspiti();
     }
   }
 
-  getPolozeniIspiti(){
+  getPolozeniIspiti() {
     this.studentService.getPolozeniIspiti(this.ulogovaniKorisnik.id).subscribe(
       (res) => {
         this.polozeniIspiti = res;

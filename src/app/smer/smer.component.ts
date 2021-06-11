@@ -35,84 +35,85 @@ export class SmerComponent implements OnInit {
   uloga;
   loaded = false;
   loaded2 = false;
-  prikaziDodaluPredmeta = false;
+  prikaziDodeluPredmeta = false;
 
-  constructor(private studentService: StudentService, private router: Router, private adminService: AdminService, private route: ActivatedRoute, private userService: UserService, private tokenStorage: TokenStorageService) { }
+  constructor(private studentService: StudentService,
+    private router: Router,
+    private adminService: AdminService,
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
 
     this.id = this.route.snapshot.paramMap.get('id');
     this.ulogovaniKorisnik = this.tokenStorage.getUser();
-    this.uloga = this.ulogovaniKorisnik.authorities[0].authority;
-
-    if(this.id != null){
+    try {
+      this.uloga = this.ulogovaniKorisnik.authorities[0].authority;
+    } catch {
+      alert("Niste prijavljeni!")
+      window.location.replace("login");
+      return;
+    }
+    if (this.id != null) {
       this.izmena = true;
       this.getTable();
       this.getPredmetiZaSmer();
       this.getSviPredmeti();
       this.getStudentiZaSmer();
     }
-    else{
+    else {
       this.dodavanje = true;
       //this.smer="";
       this.loaded = true;
     }
-    
-    
-    };
+  };
 
-   
-  
-
-  getTable(){
+  getTable() {
     this.studentService.getSmer(this.id).subscribe(
       (res) => {
-      console.log(res);
-      this.smer = res;
-      this.loaded = true;
-      this.numbers = Array(this.smer.trajanje).fill(0).map((x,i)=>i);
-    },
-    err => {
-      console.log(err);
-    })
+        console.log(res);
+        this.smer = res;
+        this.loaded = true;
+        this.numbers = Array(this.smer.trajanje).fill(0).map((x, i) => i);
+      },
+      err => {
+        console.log(err);
+      })
   }
 
-  edit(){
-    if(this.uloga == "admin"){
+  edit() {
+    if (this.uloga == "admin") {
       this.adminService.izmeniSmer(this.smer).subscribe(
         () => this.router.navigate(['/admin'])
       )
-    }else{
+    } else {
       alert("Nemate pristup ovoj funkciji!")
       this.router.navigate(['/home'])
     }
-    
   }
 
-
-  add(){
-    if(this.smer.naziv == "" || this.smer.trajanje == null){
+  add() {
+    if (this.smer.naziv == "" || this.smer.trajanje == null) {
       alert("Niste uneli sve podatke!")
       this.router.navigate(['/smer'])
-    }else{
+    } else {
       this.adminService.dodajSmer(this.smer).subscribe(
         () => this.router.navigate(['/admin'])
       )
     }
-    
   }
 
-  getPredmetiZaSmer(){
+  getPredmetiZaSmer() {
     this.studentService.getPredmetiZaSmer(this.id).subscribe(
       (res) => {
         this.predmeti = res
         this.loaded2 = true;
-        
       }
     )
   }
 
-  getSviPredmeti(){
+  getSviPredmeti() {
     this.studentService.getPredmeti().subscribe(
       (res) => {
         this.sviPredmeti = res;
@@ -121,24 +122,24 @@ export class SmerComponent implements OnInit {
     )
   }
 
-  izmeniPredmet(){
+  izmeniPredmet() {
     this.adminService.izmeniPredmetNaSmeru(this.predmeti).subscribe(
       () => window.location.reload()
     )
   }
 
-  obrisiPredmet(idPredmet: Number){
-    const idSmer = this.id;
+  obrisiPredmet(idPredmet: Number) {
+    var idSmer = this.id;
     this.adminService.obrisiPredmetNaSmeru(idPredmet, idSmer).subscribe(
       () => window.location.reload()
     )
   }
 
-  dodeliPredmetSmeru(){
-    this.prikaziDodaluPredmeta = true;
+  dodeliPredmetSmeru() {
+    this.prikaziDodeluPredmeta = true;
   }
 
-  dodajPredmet(){
+  dodajPredmet() {
     console.log("idsmer " + this.id);
     this.noviPredmet.idSmer = this.id;
     this.adminService.dodajPredmetNaSmeru(this.noviPredmet).subscribe(
@@ -146,7 +147,7 @@ export class SmerComponent implements OnInit {
     )
   }
 
-  getStudentiZaSmer(){
+  getStudentiZaSmer() {
     this.adminService.getStudentiZaSmer(this.id).subscribe(
       (res) => {
         this.studenti = res;

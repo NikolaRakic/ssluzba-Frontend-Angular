@@ -1,13 +1,13 @@
 <h3>Polozeni ispiti</h3>
 <table *ngIf="loaded" class="table table-bordered">
-    <tr>
-        <th>Naziv predmeta</th>
-        <th>Ocena</th>
-        <th>Rok</th>
-    </tr>
-    <tr *ngFor="let ispit of polozeniIspiti">
-        <td>{{ispit.nazivPredmeta}}</td>
-        <td>{{ispit.ocena}}</td>
-        <td>{{ispit.nazivRoka}}</td>
-    </tr>
+  <tr>
+    <th>Naziv predmeta</th>
+    <th>Ocena</th>
+    <th>Rok</th>
+  </tr>
+  <tr *ngFor="let ispit of polozeniIspiti">
+    <td>{{ ispit.nazivPredmeta }}</td>
+    <td>{{ ispit.ocena }}</td>
+    <td>{{ ispit.nazivRoka }}</td>
+  </tr>
 </table>

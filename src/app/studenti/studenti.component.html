@@ -1,28 +1,42 @@
-
-
 <div>
-    <h3>Studenti</h3>
-    <input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="input" (input)="search()"/>
-    <table class="table table-bordered">
-        <tr>
-            <th>Broj indeksa</th>
-            <th>Ime</th>
-            <th>Prezime</th>
-            <th>Email</th>
-            <th>Naziv smera</th>
-            <th></th>
-        </tr>
-        <tr *ngFor="let student of studenti">
-            <td><a href="profil/{{student.id}}"> {{student.brojIndeksa}}</a></td>
-            <td>{{student.ime}}</td>
-            <td>{{student.prezime}}</td>
-            <td>{{student.email}}</td>
-            <td>{{student.nazivSmera}}</td>
-            <td>
-                <a href="profil/{{student.id}}" type="button" class="btn btn-info">Edit</a>
-                &nbsp;
-                <button type="button" class="btn btn-danger" (click)="obrisiStudenta(student.id)">Delete</button>
-            </td>
-        </tr>
-    </table>
+  <h3>Studenti</h3>
+  <input
+    class="form-control mr-sm-2"
+    type="text"
+    placeholder="Search"
+    [(ngModel)]="input"
+    (input)="search()"
+  />
+  <table class="table table-bordered">
+    <tr>
+      <th>Broj indeksa</th>
+      <th>Ime</th>
+      <th>Prezime</th>
+      <th>Email</th>
+      <th>Naziv smera</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let student of studenti">
+      <td>
+        <a href="profil/{{ student.id }}"> {{ student.brojIndeksa }}</a>
+      </td>
+      <td>{{ student.ime }}</td>
+      <td>{{ student.prezime }}</td>
+      <td>{{ student.email }}</td>
+      <td>{{ student.nazivSmera }}</td>
+      <td>
+        <a href="profil/{{ student.id }}" type="button" class="btn btn-info"
+          >Edit</a
+        >
+        &nbsp;
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="obrisiStudenta(student.id)"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  </table>
 </div>

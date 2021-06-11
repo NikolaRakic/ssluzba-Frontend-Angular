@@ -18,25 +18,30 @@ export class RokoviComponent implements OnInit {
 
   ngOnInit(): void {
     this.ulogovaniKorisnik = this.tokenStorage.getUser();
-    this.uloga = this.ulogovaniKorisnik.authorities[0].authority;
-    if(this.uloga != "admin"){
+    try {
+      this.uloga = this.ulogovaniKorisnik.authorities[0].authority;
+    } catch {
+      alert("Niste prijavljeni!")
+      window.location.replace("login");
+      return;
+    }
+    if (this.uloga != "admin") {
       alert("Nemate pristup ovoj stranici!");
       this.router.navigate(['/login']);
-     
-    }else{
-    this.getRokovi();
+    } else {
+      this.getRokovi();
     }
   }
 
-  getRokovi(){
+  getRokovi() {
     this.adminService.getSviRokovi().subscribe(
-      (res) =>{
+      (res) => {
         this.rokovi = res;
       }
     )
   }
 
-  sacuvaj(){
+  sacuvaj() {
     this.adminService.sacuvajRokove(this.rokovi).subscribe(
       () => window.location.reload()
     )

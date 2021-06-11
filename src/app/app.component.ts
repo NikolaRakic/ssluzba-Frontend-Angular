@@ -20,7 +20,11 @@ export class AppComponent implements OnInit {
   smerId;
   student;
 
-  constructor(private tokenStorageService: TokenStorageService, private router: Router, private studentService: StudentService, private userService: UserService, private tokenStorage: TokenStorageService) { }
+  constructor(private tokenStorageService: TokenStorageService,
+    private router: Router,
+    private studentService: StudentService,
+    private userService: UserService,
+    private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -31,19 +35,16 @@ export class AppComponent implements OnInit {
       console.log("KORISNIK JE " + this.id);
       const uloga = user.authorities[0].authority;
 
-     if(uloga == "nastavnik"){
-       this.showProfesor = true;
-     }
-
-     if(uloga == "student"){
-      this.showStudent = true;
-      this.getSmerId();
-    }
-
-    if(uloga == "admin"){
-      this.showAdmin = true;
-    }
-
+      if (uloga == "nastavnik") {
+        this.showProfesor = true;
+      }
+      else if (uloga == "student") {
+        this.showStudent = true;
+        this.getSmerId();
+      }
+      else if (uloga == "admin") {
+        this.showAdmin = true;
+      }
       this.username = user.username;
     }
   }
@@ -53,19 +54,16 @@ export class AppComponent implements OnInit {
     this.router.navigateByUrl('/login');
   }
 
-
-  getSmerId(){
-    this.userService.getStudent(this.tokenStorage.getUser().id).subscribe((res) =>{
+  getSmerId() {
+    this.userService.getStudent(this.tokenStorage.getUser().id).subscribe((res) => {
       this.student = res;
 
       this.studentService.getSmerByNaziv(this.student.smerStudenta).subscribe((res) => {
         this.smerId = res.id;
       },
-      err => {
-        console.log(err);
-      })
-
-
+        err => {
+          console.log(err);
+        })
     });
   }
 

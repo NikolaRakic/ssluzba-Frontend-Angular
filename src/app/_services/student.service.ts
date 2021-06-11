@@ -11,31 +11,31 @@ export class StudentService {
 
   constructor(private http: HttpClient) { }
 
-  getPredmeti(){
+  getPredmeti() {
     return this.http.get(BASE_URL + '/predmet/getPredmeti');
   }
 
-  getPredmet(id){
+  getPredmet(id) {
     return this.http.get(BASE_URL + '/predmet/getPredmet/' + id);
   }
 
-  getSmerovi(){
+  getSmerovi() {
     return this.http.get(BASE_URL + '/smer/getSmerovi');
   }
 
-  getSmer(id): Observable<any>{
+  getSmer(id): Observable<any> {
     return this.http.get(BASE_URL + '/smer/getSmer/' + id);
   }
 
-  getSmerByNaziv(naziv): Observable<any>{
+  getSmerByNaziv(naziv): Observable<any> {
     return this.http.get(BASE_URL + '/smer/getSmerByNaziv/' + naziv);
   }
 
-  getPredmetiZaSmer(id): Observable<any>{
+  getPredmetiZaSmer(id): Observable<any> {
     return this.http.get(BASE_URL + '/predmet/predmetiPoSmeru/' + id);
   }
 
-  getPolozeniIspiti(idStudenta){
+  getPolozeniIspiti(idStudenta) {
     return this.http.get(BASE_URL + '/ispit/polozeniIspitiZaStudenta/' + idStudenta);
   }
 

@@ -1,19 +1,20 @@
-<h3>Rokovi</h3>> 
+<h3>Rokovi</h3>
+>
 
 <div>
-    <table class="table">
-        <tr>
-            <th>Naziv roka</th>
-        </tr>
-        <tr *ngFor="let rok of rokovi">
-            <td>{{rok.nazivRoka}}</td>
-            <td>
-                <select class="form-control"  [(ngModel)] = "rok.aktivan">
-                    <option value="false" >Neaktivan</option>
-                    <option value="true" >Aktivan</option>
-                </select>
-            </td>
-        </tr>
-    </table>
-    <button class="btn btn-primary" (click)="sacuvaj()">Sacuvaj</button>
+  <table class="table">
+    <tr>
+      <th>Naziv roka</th>
+    </tr>
+    <tr *ngFor="let rok of rokovi">
+      <td>{{ rok.nazivRoka }}</td>
+      <td>
+        <select class="form-control" [(ngModel)]="rok.aktivan">
+          <option value="false">Neaktivan</option>
+          <option value="true">Aktivan</option>
+        </select>
+      </td>
+    </tr>
+  </table>
+  <button class="btn btn-primary" (click)="sacuvaj()">Sacuvaj</button>
 </div>

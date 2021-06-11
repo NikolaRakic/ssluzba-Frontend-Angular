@@ -18,8 +18,9 @@ export class OcenjivanjeComponent implements OnInit {
   studenti;
   aktivniRokovi;
   tipoviIspita;
+  ocena;
 
-  ispitIliKolokvijumDTO={
+  ispitIliKolokvijumDTO = {
     idStudent: Number,
     idPredmet: Number,
     idRok: Number,
@@ -33,42 +34,38 @@ export class OcenjivanjeComponent implements OnInit {
   ngOnInit(): void {
     this.ulogovaniKorisnik = this.tokenStorage.getUser();
     this.uloga = this.ulogovaniKorisnik.authorities[0].authority;
-    if(this.uloga != "nastavnik"){
+    if (this.uloga != "nastavnik") {
       alert("Nemate pristup ovoj stranici!");
       this.router.navigate(['/login']);
-     
-    }else{
-    this.getPredmeti(this.ulogovaniKorisnik.id);
-    this.getAktivniRokovi();
-    this.getTipoviIspita();
+    } else {
+      this.getPredmeti(this.ulogovaniKorisnik.id);
+      this.getAktivniRokovi();
+      this.getTipoviIspita();
     }
   }
 
-
-  getPredmeti(id: Number){
+  getPredmeti(id: Number) {
     this.nastavnikService.getPredmetiZaNastavnika(id).subscribe(
       (res: any) => {
         console.log(res)
         this.predmeti = res;
-        
         this.loaded = true;
       }
     )
   }
 
-  onChange(idPredmet){
+  onChange(idPredmet) {
     console.log(idPredmet)
     this.ispitIliKolokvijumDTO.idPredmet = idPredmet;
     this.nastavnikService.getSmeroviZaPredmet(idPredmet).subscribe(
       (res) => {
-       this.smerovi = res;
-       console.log(this.smerovi)
-      
+        this.smerovi = res;
+        console.log(this.smerovi)
       }
     )
   }
 
-  onChange2(idSmer){
+  onChange2(idSmer) {
     console.log(idSmer)
     this.adminService.getStudentiZaSmer(idSmer).subscribe(
       (res) => {
@@ -77,20 +74,42 @@ export class OcenjivanjeComponent implements OnInit {
     )
   }
 
-  onChange3(idStudenta){
+  onChange3(idStudenta) {
     //this.ispitIliKolokvijumDTO.idStudent = idStudenta;
     console.log(this.ispitIliKolokvijumDTO)
   }
 
-  getAktivniRokovi(){
+  izracunajOcenu(brojBodova) {
+    if (51 <= brojBodova && brojBodova <= 60) {
+      this.ocena = 6;
+    }
+    else if (61 <= brojBodova && brojBodova <= 70) {
+      this.ocena = 7;
+    }
+    else if (71 <= brojBodova && brojBodova <= 80) {
+      this.ocena = 8;
+    }
+    else if (81 <= brojBodova && brojBodova <= 90) {
+      this.ocena = 9;
+    }
+    else if (91 <= brojBodova && brojBodova <= 100) {
+      this.ocena = 10;
+    }
+    else {
+      this.ocena = null;
+    }
+  }
+
+
+  getAktivniRokovi() {
     this.nastavnikService.getAktivniRokovi().subscribe(
-      (res) =>{
+      (res) => {
         this.aktivniRokovi = res;
       }
     )
   }
 
-  getTipoviIspita(){
+  getTipoviIspita() {
     this.nastavnikService.getTipoviIspita().subscribe(
       (res) => {
         this.tipoviIspita = res;
@@ -98,16 +117,16 @@ export class OcenjivanjeComponent implements OnInit {
     )
   }
 
-  unesiIspit(){
-    if(Number(this.ispitIliKolokvijumDTO.bodovi) > 100 || Number(this.ispitIliKolokvijumDTO.ocena) > 10){
+  unesiIspit() {
+    if (Number(this.ispitIliKolokvijumDTO.bodovi) > 100 || Number(this.ispitIliKolokvijumDTO.ocena) > 10) {
       alert("Uneli ste pogresne podatke")
       this.router.navigate(['/ocenjivanje'])
-    }else{
+    } else {
       this.nastavnikService.unesiIspit(this.ispitIliKolokvijumDTO).subscribe(
-        () =>  this.router.navigate(['/ispiti'])
+        () => this.router.navigate(['/ispiti'])
       )
     }
-    
+
   }
 
 }

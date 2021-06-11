@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Smer } from '../model/smer.model';
 import { AdminService } from "../_services/admin.service";
 import { TokenStorageService } from '../_services/token-storage.service';
 
@@ -10,7 +11,7 @@ import { TokenStorageService } from '../_services/token-storage.service';
 })
 export class AdminComponent implements OnInit {
 
-  smerovi;
+  smerovi: Smer[];
   ulogovaniKorisnik;
   uloga;
 
@@ -19,41 +20,38 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.ulogovaniKorisnik = this.tokenStorage.getUser();
-    this.uloga = this.ulogovaniKorisnik.authorities[0].authority;
-    if(this.uloga != "admin"){
-      alert("Nemate pristup ovoj stranici!");
-      this.router.navigate(['/login']);
-     
-    }else{
-      this.getSmerovi()
+    if(this.ulogovaniKorisnik != null){
+        if (this.ulogovaniKorisnik.authorities[0].authority == "admin") {
+          this.getSmerovi();
+          return;
+        }
     }
-    
-
+    alert("Nemate pristup ovoj stranici!");
+    this.router.navigate(['/login']);
   }
 
-  getSmerovi(){
-    this.adminService.getSmerovi().subscribe((res: any) =>{
+  getSmerovi() {
+    this.adminService.getSmerovi().subscribe((res: Smer[]) => {
       console.log(res);
       this.smerovi = res;
     },
-    err =>{
-      console.log(err);
-    })
+      err => {
+        console.log(err);
+      })
   }
 
 
-  obrisiSmer(smer): void{
-    this.adminService.obrisiSmer(smer).subscribe(
+  obrisiSmer(smerId: number): void {
+    this.adminService.obrisiSmer(smerId).subscribe(
       (res) => {
         this.getSmerovi()
         console.log(res);
-
       }
     );
-}
+  }
 
-dodajSmer(){
-  this.router.navigate(['/smer']);
-}
+  dodajSmer() {
+    this.router.navigate(['/smer']);
+  }
 
 }

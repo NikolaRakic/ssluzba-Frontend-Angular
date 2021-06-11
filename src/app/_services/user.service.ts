@@ -11,13 +11,12 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getStudent(id: number): Observable<any>{
+  getStudent(id: number): Observable<any> {
     return this.http.get(BASE_URL + '/korisnik/getStudent/' + id)
-  
-}
+  }
 
-  getNastavnik(id: Number): Observable<any>{
+  getNastavnik(id: Number): Observable<any> {
     return this.http.get(BASE_URL + '/korisnik/getNastavnik/' + id)
   }
-  
+
 }

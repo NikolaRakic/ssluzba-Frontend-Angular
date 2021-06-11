@@ -1,12 +1,14 @@
 <h3>Predmeti za nastavnika</h3>
 
 <div *ngIf="loaded">
-    <table class="table table-bordered">
-        <tr>
-            <th>Naziv predmeta</th>
-        </tr>
-        <tr *ngFor="let predmet of predmeti">
-            <td><a href="/predmet/{{predmet.idPredmet}}">{{predmet.naziv}}</a></td>
-        </tr>
-    </table>
+  <table class="table table-bordered">
+    <tr>
+      <th>Naziv predmeta</th>
+    </tr>
+    <tr *ngFor="let predmet of predmeti">
+      <td>
+        <a href="/predmet/{{ predmet.idPredmet }}">{{ predmet.naziv }}</a>
+      </td>
+    </tr>
+  </table>
 </div>

@@ -22,8 +22,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
-      this.isLoggedIn = true;
-      
+      this.isLoggedIn = true;  
     }
   }
 
@@ -39,22 +38,13 @@ export class LoginComponent implements OnInit {
         console.log(uloga);
 
         this.isLoginFailed = false;
-        this.isLoggedIn = true;
-       
-        
+        this.isLoggedIn = true;  
       
         this.reloadPage();
-
-       if(uloga == 'admin'){
+ 
+       if(uloga != null){
         this.router.navigateByUrl("/login");
       }
-      if(uloga == 'nastavnik'){
-        this.router.navigateByUrl("/login");
-      }
-      if(uloga == 'student'){
-        this.router.navigateByUrl("/login");
-      }
-
       
       },
       err => {

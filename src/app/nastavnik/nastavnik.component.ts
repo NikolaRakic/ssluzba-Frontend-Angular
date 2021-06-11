@@ -13,7 +13,7 @@ import { NastavnikService } from '../_services/nastavnik.service';
   styleUrls: ['./nastavnik.component.css']
 })
 export class NastavnikComponent implements OnInit {
-  constructor(private userService: UserService,private nastavnikService: NastavnikService,  private adminService: AdminService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private tokenStorage: TokenStorageService) { }
+  constructor(private userService: UserService, private nastavnikService: NastavnikService, private adminService: AdminService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private tokenStorage: TokenStorageService) { }
 
   id;
   uloge;
@@ -23,17 +23,17 @@ export class NastavnikComponent implements OnInit {
   dodavanje = false;
   izmena = false;
   nastavnik: Nastavnik = new Nastavnik({
-      idKorisnik: null,
-      uloga: "nastavnik",
-      adresa: null,
-      email: null,
-      ime: null,
-      pass: null,
-      prezime: null,
-      rodjendan: null,
-      username: null,
-      idNastavnik: null,
-      ulogaNastavnik: null
+    idKorisnik: null,
+    uloga: "nastavnik",
+    adresa: null,
+    email: null,
+    ime: null,
+    pass: null,
+    prezime: null,
+    rodjendan: null,
+    username: null,
+    idNastavnik: null,
+    ulogaNastavnik: null
   });
 
   ngOnInit(): void {
@@ -43,66 +43,59 @@ export class NastavnikComponent implements OnInit {
     this.getUloge();
     console.log(this.uloge);
 
-    if(this.id != null){
+    if (this.id != null) {
       this.izmena = true;
       this.getNastavnik();
     }
-    else{
+    else {
       this.dodavanje = true;
       this.loaded = true;
-     
     }
   }
 
-
-  getNastavnik(){
+  getNastavnik() {
     this.userService.getNastavnik(this.id).subscribe((res) => {
       console.log(res);
       this.nastavnik = res;
       this.loaded = true;
-      //console.log(this.nastavnik.predmeti)
     },
-    err => {
-      console.log(err);
-    })
+      err => {
+        console.log(err);
+      })
   }
 
-  edit(){
-    if(this.uloga == "admin"){
+  edit() {
+    if (this.uloga == "admin") {
       console.log(this.nastavnik);
       this.adminService.izmeniKorisnika(this.nastavnik).subscribe(
         () => this.router.navigate(['/nastavnici'])
       )
-    }else{
+    } else {
       alert("Nemate pristup ovoj funkciji!")
       this.router.navigate(['/home'])
     }
-    
   }
-  
 
-  add(){
-    if(this.uloga == "admin"){
-      
-      if(this.nastavnik.email == null || this.nastavnik.username == null || this.nastavnik.pass == null || this.nastavnik.ime == null || this.nastavnik.prezime == null){
+  add() {
+    if (this.uloga == "admin") {
+      if (this.nastavnik.email == null || this.nastavnik.username == null || this.nastavnik.pass == null || this.nastavnik.ime == null || this.nastavnik.prezime == null) {
         alert("Niste popunili sve podatke!")
         this.router.navigate(['/nastavnik'])
-      }else{
+      } else {
         this.authService.register(this.nastavnik).subscribe(
           () => this.router.navigate(['/nastavnici'])
         )
       }
-      
-    }else{
+    } else {
       alert("Nemate pristup ovoj funkciji!")
       this.router.navigate(['/home'])
     }
   }
 
-  getUloge(){
+  getUloge() {
     this.nastavnikService.getUloge().subscribe(
-      (res) =>{this.uloge = res} )
-      console.log(" aaa " + this.uloge)
+      (res) => { this.uloge = res })
+    console.log(" aaa " + this.uloge)
   }
 
 }

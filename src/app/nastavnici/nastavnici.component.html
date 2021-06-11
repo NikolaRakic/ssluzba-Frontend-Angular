@@ -1,28 +1,42 @@
 <h3>Nastavnici</h3>
-<input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="input" (input)="search()"/>
+<input
+  class="form-control mr-sm-2"
+  type="text"
+  placeholder="Pretraga po imenu i prezimenu"
+  [(ngModel)]="input"
+  (input)="search()"
+/>
 <div>
-    <table class="table table-bordered">
-        <tr>
-            <th>Ime</th>
-            <th>Prezime</th>
-            <th>Email</th>
-            <th>Uloga</th>
-            <th></th>
-        </tr>
-        <tr *ngFor="let nastavnik of nastavnici">
-            <td><a href="/nastavnik/{{nastavnik.idKorisnik}}">{{nastavnik.ime}}</a></td>
-            <td>{{nastavnik.prezime}}</td>
-            <td>{{nastavnik.email}}</td>
-            <td>{{nastavnik.uloga}}</td>
-            <td>
-                <a href="/nastavnik/{{nastavnik.idKorisnik}}" type="button" class="btn btn-info">Edit</a>
-                &nbsp;
-                <button type="button" class="btn btn-danger" (click)="obrisi(nastavnik.idKorisnik)">Delete</button>
-            </td>
-        </tr>
-
-             
-
-    </table>
-    <button class="btn btn-primary" (click)="dodajNastavnika()">Dodaj</button>
+  <table class="table table-bordered">
+    <tr>
+      <th>Ime</th>
+      <th>Prezime</th>
+      <th>Email</th>
+      <th>Uloga</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let nastavnik of nastavnici">
+      <td>
+        <a href="/nastavnik/{{ nastavnik.idKorisnik }}">{{ nastavnik.ime }}</a>
+      </td>
+      <td>{{ nastavnik.prezime }}</td>
+      <td>{{ nastavnik.email }}</td>
+      <td>{{ nastavnik.uloga }}</td>
+      <td>
+        <a href="/nastavnik/{{ nastavnik.idKorisnik }}"
+          type="button"
+          class="btn btn-info"
+          >Edit</a>
+        &nbsp;
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="obrisi(nastavnik.idKorisnik)"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  </table>
+  <button class="btn btn-primary" (click)="dodajNastavnika()">Dodaj</button>
 </div>

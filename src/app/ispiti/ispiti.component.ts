@@ -29,8 +29,7 @@ export class IspitiComponent implements OnInit {
     }
     if(this.uloga == "student" || this.uloga == "nastavnik") {
       this.getIspitiStudentNastavnik();
-    }
-    
+    } 
   }
 
   getSviIspiti(){
@@ -58,8 +57,7 @@ export class IspitiComponent implements OnInit {
       })
     }else if(this.input == ""){
       this.ngOnInit();
-    }
-    
+    } 
   }
 
 }
